@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+	<wb-module deploy-name="axelor-event-registration">
+		<wb-resource deploy-path="/" source-path="src/main/resources"/>
+		<wb-resource deploy-path="/" source-path="build/src-gen/resources"/>
+		<wb-resource deploy-path="/" source-path="src/main/java"/>
+		<wb-resource deploy-path="/" source-path="build/src-gen/java"/>
+		<dependent-module deploy-path="../" handle="module:/resource/axelor-message-demo/axelor-message-demo">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="../" handle="module:/resource/axelor-tool-demo/axelor-tool-demo">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="../" handle="module:/resource/axelor-exception-demo/axelor-exception-demo">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+	</wb-module>
+</project-modules>

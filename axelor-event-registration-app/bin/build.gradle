@@ -1,0 +1,45 @@
+buildscript {
+	ext.repos = {
+		jcenter()
+		mavenCentral()
+		mavenLocal()
+		maven { url 'https://plugins.gradle.org/m2/' }
+		maven { url 'https://repository.axelor.com/nexus/public/' }
+	}
+	ext.adkVersion = '5.0.+'
+	ext.appVersion = '5.0.1'
+	repositories repos
+	dependencies {
+		classpath "com.axelor:axelor-gradle:${adkVersion}"
+	}
+}
+
+allprojects {
+	repositories repos
+}
+
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+apply plugin: "com.axelor.app"
+
+axelor {
+	title = "Axelor :: EVENT-REGISTRATION-APP"
+}
+
+allprojects {
+	apply plugin: 'idea'
+	apply plugin: 'eclipse'
+
+	group = "com.trial"
+	version = "${appVersion}"
+
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+}
+
+dependencies {
+	compile project(":modules:axelor-event-registration")
+	compile project(":modules:axelor-message-demo")
+	compile project(":modules:axelor-tool-demo")
+	compile project(":modules:axelor-exception-demo")
+}

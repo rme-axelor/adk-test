@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+	<wb-module deploy-name="axelor-event-registration-app">
+		<property name="context-root" value="axelor-event-registration-app"/>
+		<wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/resources"/>
+		<wb-resource deploy-path="/WEB-INF/classes" source-path="build/src-gen/resources"/>
+		<wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>
+		<wb-resource deploy-path="/WEB-INF/classes" source-path="build/src-gen/java"/>
+		<wb-resource deploy-path="/" source-path="build/webapp"/>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/axelor-event-registration/axelor-event-registration">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/axelor-message-demo/axelor-message-demo">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/axelor-tool-demo/axelor-tool-demo">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+		<dependent-module deploy-path="/WEB-INF/lib" handle="module:/resource/axelor-exception-demo/axelor-exception-demo">
+			<dependency-type>uses</dependency-type>
+		</dependent-module>
+	</wb-module>
+</project-modules>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/domain-models
+  http://axelor.com/xml/ns/domain-models/domain-models_5.0.xsd">
+
+	<module package="com.axelor.eventregistration.db" name="eventregistration" />
+
+	<entity name="EventRegistration">
+		<many-to-one name="event" ref="Event" />
+
+		<string name="name" />
+		<string name="email" />
+
+		<many-to-one name="address" ref="Address" />
+
+		<datetime name="registrationDate" />
+		<decimal name="amount" readonly="true" />
+
+		<finder-method name="findByName" using="name" />
+		<finder-method name="findByEmail" using="email" />
+	</entity>
+
+</domain-models>

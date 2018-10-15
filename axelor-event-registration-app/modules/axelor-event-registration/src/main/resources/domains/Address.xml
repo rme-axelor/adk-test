@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domain-models xmlns="http://axelor.com/xml/ns/domain-models"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/domain-models
+  http://axelor.com/xml/ns/domain-models/domain-models_5.0.xsd">
+
+	<module package="com.axelor.eventregistration.db" name="eventregistration" />
+
+	<entity name="Address">
+		<string name="flat" title="Flat / House No." />
+		<string name="street" />
+		<string name="landmark" title="LandMark" />
+		<string name="city" />
+		<string name="country" />
+
+		<string name="fullname" title="FullName" namecolumn="true">
+			<![CDATA[
+				return flat+", "+street+", "+landmark+", "+city+", "+country;
+    		]]>
+		</string>
+
+		<finder-method name="findByName" using="street" />
+	</entity>
+
+</domain-models>

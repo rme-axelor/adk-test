@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views
+  http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+
+	<cards name="events-cards" model="com.axelor.eventregistration.db.Event"
+		title="Events">
+		<field name="reference" />
+		<field name="startDate" />
+		<field name="endDate" />
+		<field name="eventFees" />
+		<field name="description" />
+		<field name="venu" />
+		<template><![CDATA[
+			<div>
+				<b>Reference: </b>{{record.reference}}<br>
+				<b>Event Starts: <span>{{record.startDate}}</span></b><br>
+				<b>Event Ends: <span>{{record.endDate}}</span><br>
+				<b>Event Fees: </b>{{record.eventFees}}<br>
+				<b>Description: </b>{{record.description}}<br>
+				<b>Venu: </b>{{record.venu.fullname}}<br>
+			</div>
+		]]></template>
+	</cards>
+
+	<form model="com.axelor.eventregistration.db.Event" title="Events"
+		name="events-form" width="large" onLoad="action-onload-compute-totals-method,save"
+		onSave="com.axelor.eventregistrations.web.EventController:validate">
+		<toolbar>
+			<button name="importRegistration" title="Import Registration"
+				readonlyIf="!id" css="blue" onClick="action-import-registration-method" />
+			<button name="sendEmail" title="sendEmail" icon="fa-envelope" onClick=""/>
+		</toolbar>
+
+		<panel title="General Details" css="panel-blue" colSpan="12">
+			<field name="reference" colSpan="4" />
+			<field name="startDate" colSpan="4" />
+			<field name="endDate" colSpan="4" validIf="startDate &lt;= endDate" />
+		</panel>
+
+		<panel title="Venu Details" css="panel-orange" colSpan="12">
+			<field name="venu" colSpan="12" form-view="address-form"
+				grid-view="address-grid">
+				<viewer><![CDATA[
+					<b>Address: </b>{{record.fullname}}<br>
+				]]></viewer>
+				<editor x-show-on-new="true" x-show-titles="true">
+					<field name="flat" />
+					<field name="street" />
+					<field name="landmark" />
+					<field name="city" />
+					<field name="country" />
+				</editor>
+			</field>
+		</panel>
+		<panel title="Registration Details" colSpan="6" css="panel-red">
+			<field name="registrationOpen" />
+			<field name="registrationClose" validIf="registrationOpen &lt;= registrationClose" />
+			<field name="capacity" />
+			<field name="eventFees" />
+			<field name="discount" form-view="discount-form" grid-view="discount-grid"
+				canNew="true" canEdit="false" onChange="action-compute-total-discount-method" />
+			<field name="description" widget="text" />
+		</panel>
+		<panel-related field="eventRegistration" form-view="event-registration-form"
+			grid-view="event-registration-grid" colSpan="6" css="panel-pink" />
+		<panel title="Finance Details" sidebar="true" css="panel-green">
+			<field name="totalEntry" />
+			<field name="amountCollected" />
+			<field name="totalDiscount" />
+		</panel>
+	</form>
+
+	<grid model="com.axelor.eventregistration.db.Event" title="Events"
+		name="events-grid">
+		<field name="reference" />
+		<field name="startDate" />
+		<field name="endDate" />
+		<field name="eventFees" />
+		<field name="discount.amount" title="Disount Amount" />
+		<field name="venu.fullname" title="Address" />
+	</grid>
+
+	<calendar name="events-calendar" model="com.axelor.eventregistration.db.Event"
+		eventStart="startDate" title="Events" colorBy="event" eventLength="1"
+		eventStop="endDate">
+		<field name="description" />
+	</calendar>
+
+	<action-group name="action-onload-compute-totals-method">
+		<action name="action-compute-totals-method" />
+	</action-group>
+
+	<action-method name="action-compute-totals-method"
+		model="com.axelor.eventregistration.db.Event">
+		<call class="com.axelor.eventregistration.web.EventController"
+			method="computeTotals" />
+	</action-method>
+
+	<action-method name="action-compute-total-discount-method"
+		model="com.axelor.eventregistration.db.Event">
+		<call class="com.axelor.eventregistration.web.EventController"
+			method="computeDiscount" />
+	</action-method>
+
+	<action-method name="action-import-registration-method"
+		model="com.axelor.eventregistration.db.Event">
+		<call class="com.axelor.eventregistration.web.EventController"
+			method="ImportRegistrations" />
+	</action-method>
+</object-views>

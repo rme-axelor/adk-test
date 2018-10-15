@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object-views xmlns="http://axelor.com/xml/ns/object-views"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://axelor.com/xml/ns/object-views
+  http://axelor.com/xml/ns/object-views/object-views_5.0.xsd">
+
+	<grid model="com.axelor.eventregistration.db.EventRegistration"
+		title="Event Registrations" name="event-registration-grid">
+		<field name="name" />
+		<field name="email" />
+		<field name="event.description" title="Event Description" />
+		<field name="address.fullname" title="Address" />
+		<field name="amount" />
+		<field name="#emailSent" title="Email Sent" type="boolean" />
+	</grid>
+
+	<form model="com.axelor.eventregistration.db.EventRegistration"
+		title="Event Registration" name="event-registration-form" width="large"
+		onNew="action-onload-set-date-record,action-onload-set-event-method">
+		<panel title="Personal Details" css="panel-green" colSpan="12">
+			<field name="name" colSpan="6" />
+			<field name="email" placeholder="example@whatever.com" colSpan="6"
+				onChange="action-validate-email-method" />
+		</panel>
+		<panel title="Event Details" css="panel-orange">
+			<field name="event" grid-view="event-grid" colSpan="6" canEdit="false"
+				onChange="com.axelor.eventregistration.web.EventRegistrationController:validateEvent"
+				readonlyIf="_event">
+				<editor x-viewer="true">
+					<field name="reference" />
+					<field name="startDate" />
+					<field name="endDate" />
+					<field name="eventFees" />
+					<field name="description" />
+					<field name="venu" />
+				</editor>
+			</field>
+			<field name="registrationDate" colSpan="3"
+				onChange="com.axelor.eventregistration.web.EventRegistrationController:validateEvent" />
+			<field name="amount" colSpan="3" />
+		</panel>
+		<panel title="Address Details" css="panel-blue" colSpan="12">
+			<field name="address" form-view="address-form" grid-view="address-grid">
+				<viewer><![CDATA[
+					{{record.fullname}}<br>
+				]]></viewer>
+				<editor x-show-on-new="true" x-show-titles="true">
+					<field name="flat" />
+					<field name="street" />
+					<field name="landmark" />
+					<field name="city" />
+					<field name="country" />
+				</editor>
+			</field>
+		</panel>
+	</form>
+
+	<action-method name="action-validate-email-method">
+		<call class="com.axelor.eventregistration.web.EventRegistrationController"
+			method="validateEmail" />
+	</action-method>
+
+	<action-record name="action-onload-set-date-record"
+		model="com.axelor.eventregistration.db.EventRegistration">
+		<field name="registrationDate" expr="eval: __datetime__" />
+		<field name="event" expr="eval: _event" if="_event" />
+	</action-record>
+
+	<action-method name="action-onload-set-event-method">
+		<call class="com.axelor.eventregistration.web.EventRegistrationController"
+			method="setEvent" />
+	</action-method>
+
+</object-views>
