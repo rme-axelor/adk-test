@@ -16,7 +16,7 @@
 
 	<form model="com.axelor.eventregistration.db.EventRegistration"
 		title="Event Registration" name="event-registration-form" width="large"
-		onNew="action-onload-set-date-record,action-onload-set-event-method">
+		onNew="action-onnew-group">
 		<panel title="Personal Details" css="panel-green" colSpan="12">
 			<field name="name" colSpan="6" />
 			<field name="email" placeholder="example@whatever.com" colSpan="6"
@@ -24,8 +24,7 @@
 		</panel>
 		<panel title="Event Details" css="panel-orange">
 			<field name="event" grid-view="event-grid" colSpan="6" canEdit="false"
-				onChange="com.axelor.eventregistration.web.EventRegistrationController:validateEvent"
-				readonlyIf="_event">
+				onChange="com.axelor.eventregistration.web.EventRegistrationController:validateEvent">
 				<editor x-viewer="true">
 					<field name="reference" />
 					<field name="startDate" />
@@ -33,6 +32,8 @@
 					<field name="eventFees" />
 					<field name="description" />
 					<field name="venu" />
+					<field name="registrationOpen" />
+					<field name="registrationClose" />
 				</editor>
 			</field>
 			<field name="registrationDate" colSpan="3"
@@ -55,18 +56,21 @@
 		</panel>
 	</form>
 
+	<action-group name="action-onnew-group">
+		<action name="action-onNew-set-date-attrs" />
+		<action name="action-onNew-set-event-method" />
+	</action-group>
+
 	<action-method name="action-validate-email-method">
 		<call class="com.axelor.eventregistration.web.EventRegistrationController"
 			method="validateEmail" />
 	</action-method>
 
-	<action-record name="action-onload-set-date-record"
-		model="com.axelor.eventregistration.db.EventRegistration">
-		<field name="registrationDate" expr="eval: __datetime__" />
-		<field name="event" expr="eval: _event" if="_event" />
-	</action-record>
+	<action-attrs name="action-onNew-set-date-attrs">
+		<attribute name="value" for="registrationDate" expr="eval: __datetime__" />
+	</action-attrs>
 
-	<action-method name="action-onload-set-event-method">
+	<action-method name="action-onNew-set-event-method">
 		<call class="com.axelor.eventregistration.web.EventRegistrationController"
 			method="setEvent" />
 	</action-method>

@@ -21,8 +21,8 @@
 		parent="event-root" action="event.root.event.registrations.all" />
 	<action-view name="event.root.event.registrations.all"
 		title="Event Registration" model="com.axelor.eventregistration.db.EventRegistration">
-		<view type="form" name="event-registration-form" />
 		<view type="grid" name="event-registration-grid" />
+		<view type="form" name="event-registration-form" />
 	</action-view>
 
 	<menuitem title="Address Configurations" name="address-root"

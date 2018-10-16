@@ -68,8 +68,9 @@
 			<field name="capacity" />
 			<field name="eventFees" />
 		</panel>
-		<panel-related field="eventRegistration" onNew="com.axelor.eventregistration.web.EventController:openEventRegistrationForm" form-view="event-registration-form"
-			grid-view="event-registration-grid" colSpan="6" css="panel-pink" />
+		<panel-related field="eventRegistration" form-view="event-registration-form"
+			grid-view="event-registration-grid" colSpan="6" css="panel-pink"
+			onSelect="com.axelor.eventregistration.web.EventController:openEventRegistrationForm" />
 		<panel title="Discount Details" sidebar="true">
 			<field name="discount" form-view="discount-form" grid-view="discount-grid" />
 		</panel>
@@ -135,8 +136,8 @@
 
 	<action-method name="action-import-registration-method"
 		model="com.axelor.eventregistration.db.Event">
-		<call class="com.axelor.eventregistration.web.EventController"
-			method="ImportRegistrations" />
+		<call class="com.axelor.eventregistration.web.EventRegistrationController"
+			method="importRegistrations" />
 	</action-method>
 
 	<action-report output="EventReport" name="action-print-report"
