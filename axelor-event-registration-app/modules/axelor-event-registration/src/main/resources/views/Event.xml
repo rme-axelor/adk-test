@@ -31,7 +31,7 @@
 				readonlyIf="!id" css="blue"
 				onClick="action-event-view-import-event-registration-popup" />
 			<button name="sendEmail" title="sendEmail" icon="fa-envelope"
-				onClick="action-send-by-email-with-template" />
+				onClick="save,com.axelor.eventregistration.web.EventController:sendEmails" />
 			<button name="printReport" title="Print Report" onClick="action-print-report"
 				icon="fa-print" showIf="id" />
 		</toolbar>

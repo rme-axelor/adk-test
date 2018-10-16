@@ -11,7 +11,7 @@
 		<field name="event.description" title="Event Description" />
 		<field name="address.fullname" title="Address" />
 		<field name="amount" />
-		<field name="#emailSent" title="Email Sent" type="boolean" />
+		<field name="$emailSent" title="Email Sent" type="boolean" />
 	</grid>
 
 	<form model="com.axelor.eventregistration.db.EventRegistration"
