@@ -39,7 +39,7 @@ public class DiscountController {
       return;
     }
     LocalDate newDate = registrationClose.minusDays(beforeDays);
-    if (!newDate.isAfter(registrationOpen)) {
+    if (newDate.isBefore(registrationOpen)) {
       response.addError("beforeDays", "Before Days Exceeds gap of Registrations Dates!!!");
     }
   }

@@ -11,12 +11,13 @@
 		<field name="event.description" title="Event Description" />
 		<field name="address.fullname" title="Address" />
 		<field name="amount" />
-		<field name="$emailSent" title="Email Sent" type="boolean" />
+		<field name="emailSent" title="Email Sent" type="boolean" />
 	</grid>
 
 	<form model="com.axelor.eventregistration.db.EventRegistration"
-		title="Event Registration" name="event-registration-form" width="large"
-		onNew="action-onnew-group">
+	title="Event Registration" name="event-registration-form" width="large"
+	onNew="action-onnew-group"
+	onSave="com.axelor.eventregistration.web.EventRegistrationController:validateDate">
 		<panel title="Personal Details" css="panel-green" colSpan="12">
 			<field name="name" colSpan="6" />
 			<field name="email" placeholder="example@whatever.com" colSpan="6"
@@ -36,8 +37,7 @@
 					<field name="registrationClose" />
 				</editor>
 			</field>
-			<field name="registrationDate" colSpan="3"
-				onChange="com.axelor.eventregistration.web.EventRegistrationController:validateEvent" />
+			<field name="registrationDate" colSpan="3" readonly="true" />
 			<field name="amount" colSpan="3" />
 		</panel>
 		<panel title="Address Details" css="panel-blue" colSpan="12">

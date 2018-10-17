@@ -25,23 +25,23 @@
 	</cards>
 
 	<form model="com.axelor.eventregistration.db.Event" title="Events"
-		name="events-form" width="large" onLoad="action-onload-compute-totals-method,save">
+		name="events-form" width="large" onLoad="action-onload-compute-totals-method,save"
+		onSave="com.axelor.eventregistration.web.EventController:validateDate">
 		<toolbar>
 			<button name="importRegistration" title="Import Registration"
 				readonlyIf="!id" css="blue"
 				onClick="action-event-view-import-event-registration-popup" />
 			<button name="sendEmail" title="sendEmail" icon="fa-envelope"
-				onClick="save,com.axelor.eventregistration.web.EventController:sendEmails" />
+				onClick="save,com.axelor.eventregistration.web.EventController:sendEmails"
+				readonlyIf="!id" />
 			<button name="printReport" title="Print Report" onClick="action-print-report"
 				icon="fa-print" showIf="id" />
 		</toolbar>
 
 		<panel title="General Details" css="panel-blue" colSpan="12">
 			<field name="reference" colSpan="4" />
-			<field name="startDate" colSpan="4"
-				onChange="com.axelor.eventregistration.web.EventController:validateDate" />
-			<field name="endDate" colSpan="4"
-				onChange="com.axelor.eventregistration.web.EventController:validateDate" />
+			<field name="startDate" colSpan="4" />
+			<field name="endDate" colSpan="4" />
 			<field name="description" widget="text" colSpan="12" />
 		</panel>
 
@@ -61,10 +61,8 @@
 			</field>
 		</panel>
 		<panel title="Registration Details" colSpan="6" css="panel-red">
-			<field name="registrationOpen"
-				onChange="com.axelor.eventregistration.web.EventController:validateDate" />
-			<field name="registrationClose"
-				onChange="com.axelor.eventregistration.web.EventController:validateDate" />
+			<field name="registrationOpen" />
+			<field name="registrationClose" />
 			<field name="capacity" />
 			<field name="eventFees" />
 		</panel>

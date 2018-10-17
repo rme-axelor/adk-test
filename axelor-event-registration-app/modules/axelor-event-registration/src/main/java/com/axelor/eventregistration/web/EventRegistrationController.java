@@ -27,6 +27,20 @@ public class EventRegistrationController {
     response.setReadonly("event", true);
   }
 
+  public void validateDate(ActionRequest request, ActionResponse response) {
+    EventRegistration eventRegistration = request.getContext().asType(EventRegistration.class);
+    Event event = eventRepo.find(eventRegistration.getEvent().getId());
+
+    if (eventRegistration
+        .getRegistrationDate()
+        .toLocalDate()
+        .isAfter(event.getRegistrationClose())) {
+      response.addError(
+          "registrationDate",
+          "Registration Date is Not Between Registration Dates of this Event... Try again Later!");
+    }
+  }
+
   public void validateEmail(ActionRequest request, ActionResponse response) {
 
     EventRegistration eventRegistration = request.getContext().asType(EventRegistration.class);

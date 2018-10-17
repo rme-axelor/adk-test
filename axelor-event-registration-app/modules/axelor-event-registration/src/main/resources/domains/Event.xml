@@ -22,7 +22,7 @@
 		<one-to-many name="discount" ref="Discount" title="Discounts" />
 
 		<one-to-many name="eventRegistration" ref="EventRegistration"
-			title="Event Registrations" mappedBy="Event" />
+			title="Event Registrations" mappedBy="event" />
 
 		<integer name="totalEntry" readonly="true" />
 		<decimal name="amountCollected" readonly="true" />

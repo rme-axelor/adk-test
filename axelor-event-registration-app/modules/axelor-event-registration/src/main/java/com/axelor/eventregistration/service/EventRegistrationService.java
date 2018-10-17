@@ -8,6 +8,5 @@ public interface EventRegistrationService {
 
   public void importEventRegistrationData(MetaFile file, Event event);
 
-  //  public Map<String, Object> validateEvent(EventRegistration eventRegistration);
   public EventRegistration validateEvent(EventRegistration eventRegistration);
 }

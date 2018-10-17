@@ -7,7 +7,7 @@
 	<module package="com.axelor.eventregistration.db" name="eventregistration" />
 
 	<entity name="EventRegistration">
-		<many-to-one name="event" ref="Event" />
+		<many-to-one name="event" ref="Event"/>
 
 		<string name="name" />
 		<string name="email" />
@@ -16,7 +16,8 @@
 
 		<datetime name="registrationDate" />
 		<decimal name="amount" readonly="true" />
-
+	
+		<boolean name="emailSent" />	
 		<finder-method name="findByName" using="name" />
 		<finder-method name="findByEmail" using="email" />
 	</entity>
