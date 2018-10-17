@@ -2,6 +2,7 @@ package com.axelor.eventregistration.service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,10 +71,10 @@ public class EventServiceImpl implements EventService {
   @Transactional
   public void sendEmails(Event event, String model) {
 
-    //    if (event.getEndDate().isBefore(LocalDateTime.now())) {
-    //      throw new ValidationException(
-    //          "Event is completed so... Emails are of no use now...!<br> Thankyou.");
-    //    }
+    if (event.getEndDate().isBefore(LocalDateTime.now())) {
+      throw new ValidationException(
+          "Event is completed so... Emails are of no use now...!<br> Thankyou.");
+    }
 
     if (event.getDescription() == null) {
       throw new ValidationException("Add Event Description to Send Emails...!!!");

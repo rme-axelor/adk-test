@@ -18,10 +18,22 @@ public class EventController {
     Event event = request.getContext().asType(Event.class);
 
     response.setValues(eventService.compute(event));
+    if (!(event.getEventRegistration().isEmpty())) {
+      response.setReadonly("discount", true);
+    }
   }
 
   public void validateDate(ActionRequest request, ActionResponse response) {
+
     Event event = request.getContext().asType(Event.class);
+
+    if (event.getStartDate() == null
+        || event.getRegistrationOpen() == null
+        || event.getRegistrationClose() == null
+        || event.getEndDate() == null) {
+      response.setError("Enter All Dates first...!!!");
+      return;
+    }
 
     LocalDateTime startDate = event.getStartDate();
     LocalDateTime endDate = event.getEndDate();
@@ -45,12 +57,21 @@ public class EventController {
         || registrationClose.isEqual(startDate.toLocalDate())) {
       response.addError(
           "registrationClose", "Registration Close Date should be less than Event Start Date");
+      return;
+    }
+
+    if (event.getEventRegistration().isEmpty()) {
+      response.setAlert(
+          "If you want to Add Discount List add it now... Once event registrations will get added.. Discount List will not get change...!");
+      return;
     }
   }
 
   public void sendEmails(ActionRequest request, ActionResponse response) {
-    Event event = request.getContext().asType(Event.class);
 
+    Event event = request.getContext().asType(Event.class);
     eventService.sendEmails(event, request.getModel());
   }
+
+  public void validateEventRegistration(ActionRequest request, ActionResponse response) {}
 }

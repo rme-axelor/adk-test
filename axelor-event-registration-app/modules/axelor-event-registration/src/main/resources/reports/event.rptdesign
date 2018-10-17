@@ -116,6 +116,12 @@
                     <text-property name="displayName">registration_close</text-property>
                     <text-property name="heading">registration_close</text-property>
                 </structure>
+                <structure>
+                    <property name="columnName">amount_collected</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">amount_collected</text-property>
+                    <text-property name="heading">amount_collected</text-property>
+                </structure>
             </list-property>
             <list-property name="parameters">
                 <structure>
@@ -185,6 +191,11 @@
                         <property name="position">11</property>
                         <property name="name">registration_close</property>
                         <property name="dataType">date</property>
+                    </structure>
+                    <structure>
+                        <property name="position">12</property>
+                        <property name="name">amount_collected</property>
+                        <property name="dataType">decimal</property>
                     </structure>
                 </list-property>
             </structure>
@@ -267,6 +278,13 @@
                     <property name="dataType">date</property>
                     <property name="nativeDataType">91</property>
                 </structure>
+                <structure>
+                    <property name="position">12</property>
+                    <property name="name">amount_collected</property>
+                    <property name="nativeName">amount_collected</property>
+                    <property name="dataType">decimal</property>
+                    <property name="nativeDataType">2</property>
+                </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[select Event.reference,Event.start_date,
 Event.end_date,venue.fullname as address,
@@ -276,7 +294,8 @@ Event.total_discount,
 Event.capacity,
 Event.event_fees,
 Event.registration_open,
-Event.registration_close
+Event.registration_close,
+Event.amount_collected
 from eventregistration_event as Event
 inner join eventregistration_address as venue
 on venue.id=Event.venu
@@ -747,6 +766,12 @@ where Event.id=?;]]></xml-property>
                     <text-property name="displayName">amount</text-property>
                     <text-property name="heading">amount</text-property>
                 </structure>
+                <structure>
+                    <property name="columnName">email_sent</property>
+                    <property name="analysis">measure</property>
+                    <text-property name="displayName">email_sent</text-property>
+                    <text-property name="heading">email_sent</text-property>
+                </structure>
             </list-property>
             <list-property name="parameters">
                 <structure>
@@ -779,6 +804,11 @@ where Event.id=?;]]></xml-property>
                     </structure>
                     <structure>
                         <property name="position">4</property>
+                        <property name="name">email_sent</property>
+                        <property name="dataType">integer</property>
+                    </structure>
+                    <structure>
+                        <property name="position">5</property>
                         <property name="name">total_entry</property>
                         <property name="dataType">integer</property>
                     </structure>
@@ -807,32 +837,23 @@ where Event.id=?;]]></xml-property>
                     <property name="dataType">decimal</property>
                     <property name="nativeDataType">2</property>
                 </structure>
+                <structure>
+                    <property name="position">4</property>
+                    <property name="name">email_sent</property>
+                    <property name="nativeName">email_sent</property>
+                    <property name="dataType">integer</property>
+                    <property name="nativeDataType">-7</property>
+                </structure>
             </list-property>
             <xml-property name="queryText"><![CDATA[select EnvReg.name,
 EnvReg.email,
-EnvReg.amount 
+EnvReg.amount,
+EnvReg.email_sent 
 from eventregistration_event_registration as EnvReg
 where EnvReg.event=?;]]></xml-property>
             <xml-property name="designerValues"><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
 <model:DesignValues xmlns:design="http://www.eclipse.org/datatools/connectivity/oda/design" xmlns:model="http://www.eclipse.org/birt/report/model/adapter/odaModel">
   <Version>2.0</Version>
-  <DataSetParameters>
-    <parameter>
-      <design:ParameterDefinition>
-        <design:inOutMode>In</design:inOutMode>
-        <design:attributes>
-          <design:identifier>
-            <design:name></design:name>
-            <design:position>1</design:position>
-          </design:identifier>
-          <design:nativeDataTypeCode>-5</design:nativeDataTypeCode>
-          <design:precision>0</design:precision>
-          <design:scale>0</design:scale>
-          <design:nullability>Unknown</design:nullability>
-        </design:attributes>
-      </design:ParameterDefinition>
-    </parameter>
-  </DataSetParameters>
   <design:ResultSets derivedMetaData="true">
     <design:resultSetDefinitions>
       <design:resultSetColumns>
@@ -1313,8 +1334,11 @@ where evedis.eventregistration_event=?]]></xml-property>
     </data-sets>
     <page-setup>
         <simple-master-page name="Simple MasterPage" id="2">
+            <property name="headerHeight">0.75in</property>
+            <property name="footerHeight">0.75in</property>
             <page-header>
                 <data id="37">
+                    <property name="backgroundColor">silver</property>
                     <property name="fontSize">12pt</property>
                     <property name="fontWeight">bold</property>
                     <property name="textAlign">center</property>
@@ -1333,22 +1357,26 @@ where evedis.eventregistration_event=?]]></xml-property>
             </page-header>
             <page-footer>
                 <text id="3">
+                    <property name="fontSize">11pt</property>
+                    <property name="textAlign">left</property>
                     <property name="contentType">html</property>
-                    <text-property name="content"><![CDATA[<value-of>new Date()</value-of>]]></text-property>
+                    <text-property name="content"><![CDATA[<center>
+	<b>Axelor Technologies India Pvt. Ltd.</b>
+	<br>
+	604, Luxuria Business Hub, Nr. VR Mall, Dumas Road, Surat - 395007.
+</center>
+<br>
+<value-of>new Date()</value-of>]]></text-property>
                 </text>
             </page-footer>
         </simple-master-page>
     </page-setup>
     <body>
         <table id="69">
-            <property name="borderBottomStyle">solid</property>
-            <property name="borderBottomWidth">thin</property>
-            <property name="borderLeftStyle">solid</property>
-            <property name="borderLeftWidth">thin</property>
-            <property name="borderRightStyle">solid</property>
-            <property name="borderRightWidth">thin</property>
-            <property name="borderTopStyle">solid</property>
-            <property name="borderTopWidth">thin</property>
+            <property name="borderBottomStyle">none</property>
+            <property name="borderLeftStyle">none</property>
+            <property name="borderRightStyle">none</property>
+            <property name="borderTopStyle">none</property>
             <property name="dataSet">EventDetails</property>
             <list-property name="boundDataColumns">
                 <structure>
@@ -1361,13 +1389,15 @@ where evedis.eventregistration_event=?]]></xml-property>
                     <property name="name">end_date</property>
                     <text-property name="displayName">end_date</text-property>
                     <expression name="expression" type="javascript">dataSetRow["end_date"]</expression>
-                    <property name="dataType">date-time</property>
+                    <property name="dataType">date</property>
+                    <property name="allowExport">true</property>
                 </structure>
                 <structure>
                     <property name="name">start_date</property>
                     <text-property name="displayName">start_date</text-property>
                     <expression name="expression" type="javascript">dataSetRow["start_date"]</expression>
-                    <property name="dataType">date-time</property>
+                    <property name="dataType">date</property>
+                    <property name="allowExport">true</property>
                 </structure>
                 <structure>
                     <property name="name">reference</property>
@@ -1384,8 +1414,9 @@ where evedis.eventregistration_event=?]]></xml-property>
                 <structure>
                     <property name="name">total_discount</property>
                     <text-property name="displayName">total_discount</text-property>
-                    <expression name="expression" type="javascript">dataSetRow["total_discount"]</expression>
-                    <property name="dataType">decimal</property>
+                    <expression name="expression" type="javascript">"Rs. "+dataSetRow["total_discount"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
                 </structure>
                 <structure>
                     <property name="name">registration_open</property>
@@ -1412,6 +1443,13 @@ where evedis.eventregistration_event=?]]></xml-property>
                     <expression name="expression" type="javascript">dataSetRow["registration_close"]</expression>
                     <property name="dataType">date</property>
                 </structure>
+                <structure>
+                    <property name="name">amount_collected</property>
+                    <text-property name="displayName">amount_collected</text-property>
+                    <expression name="expression" type="javascript">"Rs. "+dataSetRow["amount_collected"]</expression>
+                    <property name="dataType">string</property>
+                    <property name="allowExport">true</property>
+                </structure>
             </list-property>
             <column id="88"/>
             <column id="89"/>
@@ -1436,6 +1474,7 @@ where evedis.eventregistration_event=?]]></xml-property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
                         <text id="143">
+                            <property name="backgroundColor">#F5F9BA</property>
                             <property name="fontSize">11pt</property>
                             <property name="fontWeight">bold</property>
                             <property name="textAlign">left</property>
@@ -1444,22 +1483,8 @@ where evedis.eventregistration_event=?]]></xml-property>
                         </text>
                     </cell>
                 </row>
-                <row id="144">
-                    <cell id="145">
-                        <property name="colSpan">9</property>
-                        <property name="rowSpan">1</property>
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
-                        <text id="150"/>
-                    </cell>
-                </row>
                 <row id="70">
+                    <property name="backgroundColor">#EED5D5</property>
                     <cell id="71">
                         <property name="borderBottomStyle">solid</property>
                         <property name="borderBottomWidth">thin</property>
@@ -1698,75 +1723,51 @@ where evedis.eventregistration_event=?]]></xml-property>
             </detail>
             <footer>
                 <row id="82">
+                    <property name="borderBottomStyle">none</property>
+                    <property name="borderLeftStyle">none</property>
+                    <property name="borderRightStyle">none</property>
+                    <property name="borderTopStyle">none</property>
                     <cell id="83">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
                     </cell>
                     <cell id="84">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
                     </cell>
                     <cell id="165">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
                     </cell>
                     <cell id="186">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
                     </cell>
                     <cell id="172">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
                     </cell>
                     <cell id="179">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
                     </cell>
                     <cell id="85">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
                     </cell>
                     <cell id="86">
                         <property name="borderBottomStyle">solid</property>
@@ -1791,13 +1792,60 @@ where evedis.eventregistration_event=?]]></xml-property>
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
+                        <property name="textAlign">right</property>
                         <data id="101">
                             <property name="resultSetColumn">total_entry</property>
                         </data>
                     </cell>
                 </row>
-                <row id="103">
-                    <cell id="104">
+                <row id="258">
+                    <property name="borderBottomStyle">none</property>
+                    <property name="borderLeftStyle">none</property>
+                    <property name="borderRightStyle">none</property>
+                    <property name="borderTopStyle">none</property>
+                    <cell id="259">
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
+                    </cell>
+                    <cell id="260">
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
+                    </cell>
+                    <cell id="261">
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
+                    </cell>
+                    <cell id="262">
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
+                    </cell>
+                    <cell id="263">
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
+                    </cell>
+                    <cell id="264">
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
+                    </cell>
+                    <cell id="265">
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
+                    </cell>
+                    <cell id="266">
                         <property name="borderBottomStyle">solid</property>
                         <property name="borderBottomWidth">thin</property>
                         <property name="borderLeftStyle">solid</property>
@@ -1806,66 +1854,72 @@ where evedis.eventregistration_event=?]]></xml-property>
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
+                        <label id="268">
+                            <property name="fontWeight">bold</property>
+                            <text-property name="text">Total Amount Collected :</text-property>
+                        </label>
+                    </cell>
+                    <cell id="267">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <data id="269">
+                            <property name="textAlign">right</property>
+                            <property name="resultSetColumn">amount_collected</property>
+                        </data>
+                    </cell>
+                </row>
+                <row id="103">
+                    <property name="borderBottomStyle">none</property>
+                    <property name="borderLeftStyle">none</property>
+                    <property name="borderRightStyle">none</property>
+                    <property name="borderTopStyle">none</property>
+                    <cell id="104">
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
                     </cell>
                     <cell id="105">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
                     </cell>
                     <cell id="166">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
                     </cell>
                     <cell id="187">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
                     </cell>
                     <cell id="173">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
                     </cell>
                     <cell id="180">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
                     </cell>
                     <cell id="106">
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
+                        <property name="borderBottomStyle">none</property>
+                        <property name="borderLeftStyle">none</property>
+                        <property name="borderRightStyle">none</property>
+                        <property name="borderTopStyle">none</property>
                     </cell>
                     <cell id="107">
                         <property name="borderBottomStyle">solid</property>
@@ -1891,6 +1945,7 @@ where evedis.eventregistration_event=?]]></xml-property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
                         <data id="110">
+                            <property name="textAlign">right</property>
                             <property name="resultSetColumn">total_discount</property>
                         </data>
                     </cell>
@@ -1898,15 +1953,12 @@ where evedis.eventregistration_event=?]]></xml-property>
             </footer>
         </table>
         <text id="203"/>
+        <text id="237"/>
         <table id="204">
-            <property name="borderBottomStyle">solid</property>
-            <property name="borderBottomWidth">thin</property>
-            <property name="borderLeftStyle">solid</property>
-            <property name="borderLeftWidth">thin</property>
-            <property name="borderRightStyle">solid</property>
-            <property name="borderRightWidth">thin</property>
-            <property name="borderTopStyle">solid</property>
-            <property name="borderTopWidth">thin</property>
+            <property name="borderBottomStyle">none</property>
+            <property name="borderLeftStyle">none</property>
+            <property name="borderRightStyle">none</property>
+            <property name="borderTopStyle">none</property>
             <property name="dataSet">Discount</property>
             <list-property name="boundDataColumns">
                 <structure>
@@ -1983,6 +2035,7 @@ where evedis.eventregistration_event=?]]></xml-property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
                         <text id="228">
+                            <property name="backgroundColor">#F5F9BA</property>
                             <property name="fontSize">11pt</property>
                             <property name="fontWeight">bold</property>
                             <property name="textAlign">left</property>
@@ -1991,22 +2044,8 @@ where evedis.eventregistration_event=?]]></xml-property>
                         </text>
                     </cell>
                 </row>
-                <row id="220">
-                    <cell id="221">
-                        <property name="colSpan">3</property>
-                        <property name="rowSpan">1</property>
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
-                        <text id="229"/>
-                    </cell>
-                </row>
                 <row id="205">
+                    <property name="backgroundColor">#EED5D5</property>
                     <cell id="206">
                         <property name="borderBottomStyle">solid</property>
                         <property name="borderBottomWidth">thin</property>
@@ -2068,6 +2107,7 @@ where evedis.eventregistration_event=?]]></xml-property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
                         <data id="234">
+                            <property name="textAlign">right</property>
                             <property name="resultSetColumn">before_days</property>
                         </data>
                     </cell>
@@ -2102,28 +2142,13 @@ where evedis.eventregistration_event=?]]></xml-property>
                 </row>
             </detail>
         </table>
-        <text id="237"/>
-        <grid id="111">
-            <column id="112"/>
-            <row id="113">
-                <cell id="114">
-                    <property name="colSpan">1</property>
-                    <property name="rowSpan">3</property>
-                    <text id="119"/>
-                </cell>
-            </row>
-            <row id="115"/>
-            <row id="117"/>
-        </grid>
+        <text id="244"/>
+        <text id="245"/>
         <table id="120">
-            <property name="borderBottomStyle">solid</property>
-            <property name="borderBottomWidth">thin</property>
-            <property name="borderLeftStyle">solid</property>
-            <property name="borderLeftWidth">thin</property>
-            <property name="borderRightStyle">solid</property>
-            <property name="borderRightWidth">thin</property>
-            <property name="borderTopStyle">solid</property>
-            <property name="borderTopWidth">thin</property>
+            <property name="borderBottomStyle">none</property>
+            <property name="borderLeftStyle">none</property>
+            <property name="borderRightStyle">none</property>
+            <property name="borderTopStyle">none</property>
             <property name="dataSet">Entry Details</property>
             <list-property name="boundDataColumns">
                 <structure>
@@ -2149,6 +2174,18 @@ where evedis.eventregistration_event=?]]></xml-property>
                     <expression name="expression" type="javascript">dataSetRow["total_entry"]</expression>
                     <property name="dataType">integer</property>
                 </structure>
+                <structure>
+                    <property name="name">email_sent</property>
+                    <text-property name="displayName">email_sent</text-property>
+                    <expression name="expression" type="javascript">if(dataSetRow["email_sent"] == 1){
+	&lt;value-of>Yes&lt;/value-of>
+}
+else {
+	&lt;value-of>No&lt;/value-of>
+}</expression>
+                    <property name="dataType">javaObject</property>
+                    <property name="allowExport">true</property>
+                </structure>
             </list-property>
             <structure name="toc"/>
             <column id="133">
@@ -2167,6 +2204,14 @@ where evedis.eventregistration_event=?]]></xml-property>
                     </structure>
                 </list-property>
             </column>
+            <column id="255">
+                <list-property name="visibility">
+                    <structure>
+                        <property name="format">all</property>
+                        <expression name="valueExpr" type="javascript">row["total_entry"] &lt;= 0</expression>
+                    </structure>
+                </list-property>
+            </column>
             <column id="135">
                 <list-property name="visibility">
                     <structure>
@@ -2178,7 +2223,7 @@ where evedis.eventregistration_event=?]]></xml-property>
             <header>
                 <row id="151">
                     <cell id="152">
-                        <property name="colSpan">3</property>
+                        <property name="colSpan">4</property>
                         <property name="rowSpan">1</property>
                         <property name="borderBottomStyle">solid</property>
                         <property name="borderBottomWidth">thin</property>
@@ -2189,6 +2234,7 @@ where evedis.eventregistration_event=?]]></xml-property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
                         <text id="159">
+                            <property name="backgroundColor">#F5F9BA</property>
                             <property name="fontSize">11pt</property>
                             <property name="fontWeight">bold</property>
                             <property name="textAlign">left</property>
@@ -2197,22 +2243,8 @@ where evedis.eventregistration_event=?]]></xml-property>
                         </text>
                     </cell>
                 </row>
-                <row id="155">
-                    <cell id="156">
-                        <property name="colSpan">3</property>
-                        <property name="rowSpan">1</property>
-                        <property name="borderBottomStyle">solid</property>
-                        <property name="borderBottomWidth">thin</property>
-                        <property name="borderLeftStyle">solid</property>
-                        <property name="borderLeftWidth">thin</property>
-                        <property name="borderRightStyle">solid</property>
-                        <property name="borderRightWidth">thin</property>
-                        <property name="borderTopStyle">solid</property>
-                        <property name="borderTopWidth">thin</property>
-                        <text id="160"/>
-                    </cell>
-                </row>
                 <row id="121">
+                    <property name="backgroundColor">#EED5D5</property>
                     <cell id="122">
                         <property name="borderBottomStyle">solid</property>
                         <property name="borderBottomWidth">thin</property>
@@ -2241,6 +2273,21 @@ where evedis.eventregistration_event=?]]></xml-property>
                             <property name="fontWeight">bold</property>
                             <property name="textAlign">left</property>
                             <text-property name="text">Email</text-property>
+                        </label>
+                    </cell>
+                    <cell id="253">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <label id="256">
+                            <property name="fontWeight">bold</property>
+                            <property name="textAlign">left</property>
+                            <text-property name="text">Email Sent</text-property>
                         </label>
                     </cell>
                     <cell id="124">
@@ -2286,6 +2333,19 @@ where evedis.eventregistration_event=?]]></xml-property>
                         <property name="borderTopWidth">thin</property>
                         <data id="201">
                             <property name="resultSetColumn">email</property>
+                        </data>
+                    </cell>
+                    <cell id="254">
+                        <property name="borderBottomStyle">solid</property>
+                        <property name="borderBottomWidth">thin</property>
+                        <property name="borderLeftStyle">solid</property>
+                        <property name="borderLeftWidth">thin</property>
+                        <property name="borderRightStyle">solid</property>
+                        <property name="borderRightWidth">thin</property>
+                        <property name="borderTopStyle">solid</property>
+                        <property name="borderTopWidth">thin</property>
+                        <data id="257">
+                            <property name="resultSetColumn">email_sent</property>
                         </data>
                     </cell>
                     <cell id="128">

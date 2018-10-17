@@ -78,10 +78,6 @@ public class EventRegistrationServiceImpl implements EventRegistrationService {
 
     Event event = eventRepo.find(eventRegistration.getEvent().getId());
 
-    if ((event.getCapacity() - event.getTotalEntry()) <= 0) {
-      throw new ValidationException(I18n.get(ITranslation.REGISTRATIONS_FULL));
-    }
-
     LocalDate registrationOpen = event.getRegistrationOpen();
     LocalDate registrationClose = event.getRegistrationClose();
     LocalDateTime registrationDate = eventRegistration.getRegistrationDate();

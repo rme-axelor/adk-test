@@ -6,6 +6,8 @@ import com.axelor.eventregistration.db.Event;
 import com.axelor.eventregistration.db.EventRegistration;
 import com.axelor.eventregistration.db.repo.EventRepository;
 import com.axelor.eventregistration.service.EventRegistrationService;
+import com.axelor.eventregistration.translation.ITranslation;
+import com.axelor.i18n.I18n;
 import com.axelor.inject.Beans;
 import com.axelor.meta.db.MetaFile;
 import com.axelor.meta.db.repo.MetaFileRepository;
@@ -34,6 +36,11 @@ public class EventRegistrationController {
   public void validateDate(ActionRequest request, ActionResponse response) {
     EventRegistration eventRegistration = request.getContext().asType(EventRegistration.class);
     Event event = eventRepo.find(eventRegistration.getEvent().getId());
+
+    if ((event.getCapacity() - event.getTotalEntry()) <= 0) {
+      response.addError("event", I18n.get(ITranslation.REGISTRATIONS_FULL));
+      return;
+    }
 
     if (eventRegistration
         .getRegistrationDate()

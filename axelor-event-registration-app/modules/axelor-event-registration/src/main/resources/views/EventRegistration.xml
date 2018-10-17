@@ -17,7 +17,7 @@
 	<form model="com.axelor.eventregistration.db.EventRegistration"
 		title="Event Registration" name="event-registration-form" width="large"
 		onNew="action-onnew-group"
-		onSave="com.axelor.eventregistration.web.EventRegistrationController:validateDate">
+		onSave="action-validate-date-method">
 		<panel title="Personal Details" css="panel-green" colSpan="12">
 			<field name="name" colSpan="6" />
 			<field name="email" placeholder="example@whatever.com" colSpan="6"
@@ -38,7 +38,7 @@
 				</editor>
 			</field>
 			<panel colSpan="4" readonly="true">
-				<field name="event.discount" title="Event Discounts" colSpan="12"/>
+				<field name="event.discount" title="Event Discounts" colSpan="12" />
 			</panel>
 			<panel colSpan="3">
 				<field name="registrationDate" colSpan="12" readonly="true" />
@@ -87,4 +87,8 @@
 			method="validateEvent" />
 	</action-method>
 
+	<action-method name="action-validate-date-method">
+		<call class="com.axelor.eventregistration.web.EventRegistrationController"
+			method="validateDate" />
+	</action-method>
 </object-views>
