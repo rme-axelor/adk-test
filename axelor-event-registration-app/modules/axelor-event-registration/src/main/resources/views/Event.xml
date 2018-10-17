@@ -67,8 +67,7 @@
 			<field name="eventFees" />
 		</panel>
 		<panel-related field="eventRegistration" form-view="event-registration-form"
-			grid-view="event-registration-grid" colSpan="6" css="panel-pink"
-			onSelect="com.axelor.eventregistration.web.EventController:openEventRegistrationForm" />
+			grid-view="event-registration-grid" colSpan="6" css="panel-pink" />
 		<panel title="Discount Details" sidebar="true">
 			<field name="discount" form-view="discount-form" grid-view="discount-grid" />
 		</panel>

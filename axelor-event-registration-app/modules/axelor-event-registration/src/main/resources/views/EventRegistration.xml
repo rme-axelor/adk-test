@@ -15,17 +15,17 @@
 	</grid>
 
 	<form model="com.axelor.eventregistration.db.EventRegistration"
-	title="Event Registration" name="event-registration-form" width="large"
-	onNew="action-onnew-group"
-	onSave="com.axelor.eventregistration.web.EventRegistrationController:validateDate">
+		title="Event Registration" name="event-registration-form" width="large"
+		onNew="action-onnew-group"
+		onSave="com.axelor.eventregistration.web.EventRegistrationController:validateDate">
 		<panel title="Personal Details" css="panel-green" colSpan="12">
 			<field name="name" colSpan="6" />
 			<field name="email" placeholder="example@whatever.com" colSpan="6"
 				onChange="action-validate-email-method" />
 		</panel>
 		<panel title="Event Details" css="panel-orange">
-			<field name="event" grid-view="event-grid" colSpan="6" canEdit="false"
-				onChange="com.axelor.eventregistration.web.EventRegistrationController:validateEvent">
+			<field name="event" grid-view="event-grid" colSpan="5" canEdit="false"
+				onChange="action-validate-event-method">
 				<editor x-viewer="true">
 					<field name="reference" />
 					<field name="startDate" />
@@ -37,8 +37,14 @@
 					<field name="registrationClose" />
 				</editor>
 			</field>
-			<field name="registrationDate" colSpan="3" readonly="true" />
-			<field name="amount" colSpan="3" />
+			<panel colSpan="4" readonly="true">
+				<field name="event.discount" title="Event Discounts" colSpan="12"/>
+			</panel>
+			<panel colSpan="3">
+				<field name="registrationDate" colSpan="12" readonly="true" />
+				<field name="amount" colSpan="12" />
+			</panel>
+
 		</panel>
 		<panel title="Address Details" css="panel-blue" colSpan="12">
 			<field name="address" form-view="address-form" grid-view="address-grid">
@@ -59,6 +65,7 @@
 	<action-group name="action-onnew-group">
 		<action name="action-onNew-set-date-attrs" />
 		<action name="action-onNew-set-event-method" />
+		<action name="action-validate-event-method" />
 	</action-group>
 
 	<action-method name="action-validate-email-method">
@@ -73,6 +80,11 @@
 	<action-method name="action-onNew-set-event-method">
 		<call class="com.axelor.eventregistration.web.EventRegistrationController"
 			method="setEvent" />
+	</action-method>
+
+	<action-method name="action-validate-event-method">
+		<call class="com.axelor.eventregistration.web.EventRegistrationController"
+			method="validateEvent" />
 	</action-method>
 
 </object-views>

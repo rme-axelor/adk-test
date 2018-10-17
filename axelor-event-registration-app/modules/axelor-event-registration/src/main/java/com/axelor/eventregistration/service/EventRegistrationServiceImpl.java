@@ -57,9 +57,6 @@ public class EventRegistrationServiceImpl implements EventRegistrationService {
             public void imported(Model bean) {
               EventRegistration eventRegistration = (EventRegistration) bean;
               eventRegistration.setEvent(event);
-              //              Object object = validateEvent(eventRegistration).get("amount");
-              //
-              // eventRegistration.setAmount(BigDecimal.valueOf(Long.valueOf(object.toString())));
               eventRegistration = validateEvent(eventRegistration);
               eventRegistrationRepo.save(eventRegistration);
             }
@@ -79,8 +76,6 @@ public class EventRegistrationServiceImpl implements EventRegistrationService {
   @Override
   public EventRegistration validateEvent(EventRegistration eventRegistration) {
 
-    //    Map<String, Object> eventRegistrationMap = new HashMap<>();
-    System.err.println(eventRegistration.getEvent().getId());
     Event event = eventRepo.find(eventRegistration.getEvent().getId());
 
     if ((event.getCapacity() - event.getTotalEntry()) <= 0) {
@@ -102,18 +97,24 @@ public class EventRegistrationServiceImpl implements EventRegistrationService {
       for (Discount discount : discountlist) {
         Integer beforeDays = discount.getBeforeDays();
 
-        if ((registrationClose.minusDays(beforeDays).isAfter(registrationDate.toLocalDate()))
-            || (registrationClose.minusDays(beforeDays).isEqual(registrationDate.toLocalDate()))) {
+        BigDecimal tempDiscount = BigDecimal.ZERO;
+
+        if (!registrationClose.minusDays(beforeDays).isBefore(registrationDate.toLocalDate())) {
+          tempDiscount = discountamount;
           discountamount = BigDecimal.ZERO;
           discountamount = discountamount.add(discount.getDiscountAmount());
+          if ((registrationClose.minusDays(beforeDays).isEqual(registrationDate.toLocalDate()))) {
+            break;
+          }
+          if (tempDiscount.compareTo(discountamount) == 1) {
+            discountamount = tempDiscount;
+          }
         }
       }
 
       eventRegistration.setAmount(event.getEventFees().subtract(discountamount));
-      //      eventRegistrationMap.put("amount", event.getEventFees().subtract(discountamount));
       return eventRegistration;
     }
-    //    eventRegistrationMap.put("amount", event.getEventFees());
     eventRegistration.setAmount(event.getEventFees());
     return eventRegistration;
   }

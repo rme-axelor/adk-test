@@ -69,6 +69,16 @@ public class EventServiceImpl implements EventService {
   @Override
   @Transactional
   public void sendEmails(Event event, String model) {
+
+    //    if (event.getEndDate().isBefore(LocalDateTime.now())) {
+    //      throw new ValidationException(
+    //          "Event is completed so... Emails are of no use now...!<br> Thankyou.");
+    //    }
+
+    if (event.getDescription() == null) {
+      throw new ValidationException("Add Event Description to Send Emails...!!!");
+    }
+
     MetaModel metaModel = metaModelRepo.all().filter("self.fullName = ?", model).fetchOne();
 
     Template template =
@@ -79,12 +89,12 @@ public class EventServiceImpl implements EventService {
 
     List<EventRegistration> eventRegistrationList = event.getEventRegistration();
     for (EventRegistration eventRegistration : eventRegistrationList) {
-      if (eventRegistration.getEmail() != null) {
+      if (eventRegistration.getEmail() != null && (!eventRegistration.getEmailSent())) {
 
         String content =
             "<b>Event Reference: </b>"
                 + event.getReference()
-                + "<b>Event Descriprtion: </b>"
+                + "<br><b>Event Descriprtion: </b>"
                 + event.getDescription()
                 + "<br><br><b>Participant Name: </b>"
                 + eventRegistration.getName()

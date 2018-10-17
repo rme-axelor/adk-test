@@ -23,6 +23,10 @@ public class EventRegistrationController {
 
     EventRegistration eventRegistration = request.getContext().asType(EventRegistration.class);
 
+    if (eventRegistration.getEvent() == null) {
+      return;
+    }
+
     response.setValues(eventRegistrationService.validateEvent(eventRegistration));
     response.setReadonly("event", true);
   }
@@ -81,8 +85,6 @@ public class EventRegistrationController {
         (LinkedHashMap<String, Object>) request.getContext().get("metaFile");
     MetaFile dataFile =
         Beans.get(MetaFileRepository.class).find(((Integer) map.get("id")).longValue());
-
-    System.err.println(dataFile.getFileType());
 
     if (!dataFile.getFileType().equals("text/csv")) {
       response.setError("Only .csv formats are Accepted!!!");
