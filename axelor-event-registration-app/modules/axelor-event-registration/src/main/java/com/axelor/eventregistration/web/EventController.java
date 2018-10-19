@@ -2,6 +2,7 @@ package com.axelor.eventregistration.web;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Collections;
 
 import com.axelor.eventregistration.db.Event;
 import com.axelor.eventregistration.service.EventService;
@@ -20,6 +21,9 @@ public class EventController {
     response.setValues(eventService.compute(event));
     if (!(event.getEventRegistration().isEmpty())) {
       response.setReadonly("discount", true);
+    }
+    if (event.getCapacity() - event.getTotalEntry() <= 0) {
+      response.setReadonly("eventRegistration", true);
     }
   }
 
@@ -53,8 +57,7 @@ public class EventController {
       return;
     }
 
-    if (registrationClose.isAfter(startDate.toLocalDate())
-        || registrationClose.isEqual(startDate.toLocalDate())) {
+    if (!registrationClose.isBefore(startDate.toLocalDate())) {
       response.addError(
           "registrationClose", "Registration Close Date should be less than Event Start Date");
       return;
@@ -65,6 +68,16 @@ public class EventController {
           "If you want to Add Discount List add it now... Once event registrations will get added.. Discount List will not get change...!");
       return;
     }
+
+    Collections.reverse(event.getEventRegistration());
+    LocalDateTime registrationDate =
+        event.getEventRegistration().iterator().next().getRegistrationDate();
+    if (registrationDate.toLocalDate().isBefore(event.getRegistrationOpen())
+        || registrationDate.toLocalDate().isAfter(event.getRegistrationClose())) {
+      response.setFlash("Last entered Entry not matches registrations dates of events...");
+      response.addError(
+          "eventRegistration", "Last entered Entry not matches registrations dates of events...");
+    }
   }
 
   public void sendEmails(ActionRequest request, ActionResponse response) {
@@ -72,6 +85,4 @@ public class EventController {
     Event event = request.getContext().asType(Event.class);
     eventService.sendEmails(event, request.getModel());
   }
-
-  public void validateEventRegistration(ActionRequest request, ActionResponse response) {}
 }

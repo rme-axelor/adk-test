@@ -84,11 +84,11 @@
 
 	<action-method name="action-validate-event-method">
 		<call class="com.axelor.eventregistration.web.EventRegistrationController"
-			method="validateEvent" />
+			method="computeAmount" />
 	</action-method>
 
 	<action-method name="action-validate-date-method">
 		<call class="com.axelor.eventregistration.web.EventRegistrationController"
-			method="validateDate" />
+			method="validateEvent" />
 	</action-method>
 </object-views>

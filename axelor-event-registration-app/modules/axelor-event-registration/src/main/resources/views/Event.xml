@@ -15,8 +15,8 @@
 		<template><![CDATA[
 			<div>
 				<b>Reference: </b>{{record.reference}}<br>
-				<b>Event Starts: <span>{{record.startDate}}</span></b><br>
-				<b>Event Ends: <span>{{record.endDate}}</span><br>
+				<b>Event Starts: <span>{{record.startDate}}</span><br>
+				Event Ends: <span>{{record.endDate}}</span></b><br>
 				<b>Event Fees: </b>Rs. {{record.eventFees}}<br>
 				<b>Description: </b>{{record.description}}<br>
 				<b>Venu: </b>{{record.venu.fullname}}<br>
@@ -30,7 +30,7 @@
 		<toolbar>
 			<button name="importRegistration" title="Import Registration"
 				readonlyIf="!id" css="blue"
-				onClick="save,action-event-view-import-event-registration-popup" />
+				onClick="save,action-event-view-import-event-registration-popup,save" />
 			<button name="sendEmail" title="sendEmail" icon="fa-envelope"
 				onClick="save,com.axelor.eventregistration.web.EventController:sendEmails"
 				readonlyIf="!id" />
@@ -67,9 +67,8 @@
 			<field name="eventFees" />
 		</panel>
 		<panel-related field="eventRegistration" form-view="event-registration-form"
-			canEdit="false" grid-view="event-registration-grid" colSpan="6"
-			css="panel-pink" onChange="action-new-event-registration-validate-event-date-method" />
-		<panel title="Discount Details" sidebar="true">
+			grid-view="event-registration-grid" colSpan="6" css="panel-pink" />
+		<panel title="Discount Details" sidebar="true" css="panel-yellow">
 			<field name="discount" readonly="false" form-view="discount-form"
 				grid-view="discount-grid" />
 		</panel>
@@ -142,12 +141,6 @@
 	<action-method name="action-event-validate-date-method">
 		<call class="com.axelor.eventregistration.web.EventController"
 			method="validateDate" />
-	</action-method>
-
-	<action-method
-		name="action-new-event-registration-validate-event-date-method">
-		<call class="com.axelor.eventregistration.web.EventController"
-			method="validateEventRegistration" />
 	</action-method>
 
 	<action-report output="EventReport" name="action-print-report"

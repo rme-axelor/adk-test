@@ -1,6 +1,10 @@
 package com.axelor.eventregistration.web;
 
+import java.io.IOException;
 import java.util.LinkedHashMap;
+import java.util.Map;
+
+import org.quartz.xml.ValidationException;
 
 import com.axelor.eventregistration.db.Event;
 import com.axelor.eventregistration.db.EventRegistration;
@@ -21,7 +25,8 @@ public class EventRegistrationController {
 
   @Inject EventRegistrationService eventRegistrationService;
 
-  public void validateEvent(ActionRequest request, ActionResponse response) {
+  public void computeAmount(ActionRequest request, ActionResponse response)
+      throws ValidationException {
 
     EventRegistration eventRegistration = request.getContext().asType(EventRegistration.class);
 
@@ -29,26 +34,26 @@ public class EventRegistrationController {
       return;
     }
 
-    response.setValues(eventRegistrationService.validateEvent(eventRegistration));
+    response.setValues(eventRegistrationService.computeAmount(eventRegistration));
     response.setReadonly("event", true);
   }
 
-  public void validateDate(ActionRequest request, ActionResponse response) {
+  public void validateEvent(ActionRequest request, ActionResponse response)
+      throws ValidationException {
     EventRegistration eventRegistration = request.getContext().asType(EventRegistration.class);
     Event event = eventRepo.find(eventRegistration.getEvent().getId());
 
     if ((event.getCapacity() - event.getTotalEntry()) <= 0) {
       response.addError("event", I18n.get(ITranslation.REGISTRATIONS_FULL));
-      return;
+      throw new ValidationException("Capacity full for this event.... Try again later...");
     }
 
-    if (eventRegistration
-        .getRegistrationDate()
-        .toLocalDate()
-        .isAfter(event.getRegistrationClose())) {
-      response.addError(
-          "registrationDate",
-          "Registration Date is Not Between Registration Dates of this Event... Try again Later!");
+    if (eventRegistration.getRegistrationDate().toLocalDate().isAfter(event.getRegistrationClose())
+        || eventRegistration
+            .getRegistrationDate()
+            .toLocalDate()
+            .isBefore(event.getRegistrationOpen())) {
+      response.addError("registrationDate", I18n.get(ITranslation.REGISTRATION_DATE_ERROR));
     }
   }
 
@@ -85,7 +90,8 @@ public class EventRegistrationController {
     response.setHidden("event", true);
   }
 
-  public void importRegistrations(ActionRequest request, ActionResponse response) {
+  public void importRegistrations(ActionRequest request, ActionResponse response)
+      throws IOException {
 
     @SuppressWarnings("unchecked")
     LinkedHashMap<String, Object> map =
@@ -99,6 +105,29 @@ public class EventRegistrationController {
     }
 
     Long id = Long.valueOf(request.getContext().get("_id").toString());
-    eventRegistrationService.importEventRegistrationData(dataFile, eventRepo.find(id));
+
+    Event event = eventRepo.find(id);
+    response.setAlert("Total Imports Can be: " + (event.getCapacity() - event.getTotalEntry()));
+
+    eventRegistrationService.importEventRegistrationData(dataFile, event);
+    response.setFlash("Data Imported!!!");
+    response.setReload(true);
+  }
+
+  public Object updateEventRegistration(Object bean, Map<String, Object> values)
+      throws ValidationException {
+
+    assert bean instanceof EventRegistration;
+    assert values.get("_event") instanceof Event;
+    Event event = (Event) values.get("_event");
+    if ((event.getCapacity() - event.getTotalEntry()) <= 0) {
+      return bean;
+    }
+
+    EventRegistration eventRegistration = (EventRegistration) bean;
+    eventRegistration.setEvent(event);
+    eventRegistrationService.computeAmount(eventRegistration);
+    event.setTotalEntry(event.getTotalEntry() + 1);
+    return bean;
   }
 }
