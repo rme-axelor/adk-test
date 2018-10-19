@@ -1508,23 +1508,56 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
             <property name="headerHeight">0.75in</property>
             <property name="footerHeight">0.75in</property>
             <page-header>
-                <data id="37">
-                    <property name="backgroundColor">silver</property>
-                    <property name="fontSize">12pt</property>
-                    <property name="fontWeight">bold</property>
-                    <property name="textAlign">center</property>
-                    <property name="dataSet">EventDetails</property>
-                    <list-property name="boundDataColumns">
-                        <structure>
-                            <property name="name">description</property>
-                            <text-property name="displayName">description</text-property>
-                            <expression name="expression" type="javascript">"Event Description: "+dataSetRow["description"]</expression>
-                            <property name="dataType">string</property>
-                            <property name="allowExport">true</property>
-                        </structure>
-                    </list-property>
-                    <property name="resultSetColumn">description</property>
-                </data>
+                <grid id="311">
+                    <column id="312"/>
+                    <column id="313"/>
+                    <row id="314">
+                        <property name="backgroundColor">silver</property>
+                        <cell id="315">
+                            <text id="317">
+                                <property name="fontSize">11pt</property>
+                                <property name="fontWeight">bold</property>
+                                <property name="textAlign">right</property>
+                                <property name="dataSet">TranslateDS</property>
+                                <list-property name="paramBindings">
+                                    <structure>
+                                        <property name="paramName">param_1</property>
+                                        <simple-property-list name="expression">
+                                            <value type="javascript">'Event Description'</value>
+                                        </simple-property-list>
+                                    </structure>
+                                </list-property>
+                                <list-property name="boundDataColumns">
+                                    <structure>
+                                        <property name="name">translation</property>
+                                        <text-property name="displayName">translation</text-property>
+                                        <expression name="expression" type="javascript">dataSetRow["translation"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                </list-property>
+                                <property name="contentType">html</property>
+                                <text-property name="content"><![CDATA[<VALUE-OF>row["translation"]</VALUE-OF>   ]]></text-property>
+                            </text>
+                        </cell>
+                        <cell id="316">
+                            <text id="318">
+                                <property name="fontSize">11pt</property>
+                                <property name="fontWeight">bold</property>
+                                <property name="dataSet">EventDetails</property>
+                                <list-property name="boundDataColumns">
+                                    <structure>
+                                        <property name="name">description</property>
+                                        <text-property name="displayName">description</text-property>
+                                        <expression name="expression" type="javascript">dataSetRow["description"]</expression>
+                                        <property name="dataType">string</property>
+                                    </structure>
+                                </list-property>
+                                <property name="contentType">html</property>
+                                <text-property name="content"><![CDATA[<VALUE-OF>row["description"]</VALUE-OF>]]></text-property>
+                            </text>
+                        </cell>
+                    </row>
+                </grid>
             </page-header>
             <page-footer>
                 <text id="3">
@@ -2007,9 +2040,10 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <data id="100">
-                            <property name="resultSetColumn">reference</property>
-                        </data>
+                        <text id="283">
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["reference"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                     <cell id="78">
                         <property name="borderBottomStyle">solid</property>
@@ -2020,9 +2054,10 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <data id="98">
-                            <property name="resultSetColumn">start_date</property>
-                        </data>
+                        <text id="284">
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["start_date"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                     <cell id="164">
                         <property name="borderBottomStyle">solid</property>
@@ -2033,9 +2068,10 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <data id="189">
-                            <property name="resultSetColumn">registration_open</property>
-                        </data>
+                        <text id="285">
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["registration_open"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                     <cell id="185">
                         <property name="borderBottomStyle">solid</property>
@@ -2046,9 +2082,10 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <data id="96">
-                            <property name="resultSetColumn">end_date</property>
-                        </data>
+                        <text id="287">
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["end_date"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                     <cell id="171">
                         <property name="borderBottomStyle">solid</property>
@@ -2059,9 +2096,10 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <data id="196">
-                            <property name="resultSetColumn">registration_close</property>
-                        </data>
+                        <text id="288">
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["registration_close"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                     <cell id="178">
                         <property name="borderBottomStyle">solid</property>
@@ -2072,10 +2110,11 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <data id="195">
+                        <text id="289">
                             <property name="textAlign">right</property>
-                            <property name="resultSetColumn">capacity</property>
-                        </data>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["capacity"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                     <cell id="79">
                         <property name="borderBottomStyle">solid</property>
@@ -2086,10 +2125,11 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <data id="194">
+                        <text id="290">
                             <property name="textAlign">right</property>
-                            <property name="resultSetColumn">event_fees</property>
-                        </data>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["event_fees"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                     <cell id="80">
                         <property name="colSpan">2</property>
@@ -2102,9 +2142,11 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <data id="94">
-                            <property name="resultSetColumn">address</property>
-                        </data>
+                        <text id="291">
+                            <property name="textAlign">left</property>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["address"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                 </row>
             </detail>
@@ -2205,9 +2247,10 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
                         <property name="textAlign">right</property>
-                        <data id="101">
-                            <property name="resultSetColumn">total_entry</property>
-                        </data>
+                        <text id="292">
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["total_entry"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                 </row>
                 <row id="258">
@@ -2305,10 +2348,11 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <data id="269">
+                        <text id="293">
                             <property name="textAlign">right</property>
-                            <property name="resultSetColumn">amount_collected</property>
-                        </data>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["amount_collected"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                 </row>
                 <row id="103">
@@ -2406,10 +2450,11 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <data id="110">
+                        <text id="294">
                             <property name="textAlign">right</property>
-                            <property name="resultSetColumn">total_discount</property>
-                        </data>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["total_discount"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                 </row>
             </footer>
@@ -2540,11 +2585,34 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <text id="230">
+                        <text id="298">
                             <property name="fontWeight">bold</property>
                             <property name="textAlign">left</property>
-                            <property name="contentType">auto</property>
-                            <text-property name="content"><![CDATA[Before Days]]></text-property>
+                            <property name="dataSet">TranslateDS</property>
+                            <list-property name="paramBindings">
+                                <structure>
+                                    <property name="paramName">param_1</property>
+                                    <simple-property-list name="expression">
+                                        <value type="javascript">'Before Days'</value>
+                                    </simple-property-list>
+                                </structure>
+                            </list-property>
+                            <list-property name="boundDataColumns">
+                                <structure>
+                                    <property name="name">message_key</property>
+                                    <text-property name="displayName">message_key</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["message_key"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">translation</property>
+                                    <text-property name="displayName">translation</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["translation"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                            </list-property>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["translation"]</VALUE-OF>]]></text-property>
                         </text>
                     </cell>
                     <cell id="207">
@@ -2556,11 +2624,34 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <text id="231">
+                        <text id="299">
                             <property name="fontWeight">bold</property>
                             <property name="textAlign">left</property>
-                            <property name="contentType">auto</property>
-                            <text-property name="content"><![CDATA[Discount Percentage (%)]]></text-property>
+                            <property name="dataSet">TranslateDS</property>
+                            <list-property name="paramBindings">
+                                <structure>
+                                    <property name="paramName">param_1</property>
+                                    <simple-property-list name="expression">
+                                        <value type="javascript">'Discount percent'</value>
+                                    </simple-property-list>
+                                </structure>
+                            </list-property>
+                            <list-property name="boundDataColumns">
+                                <structure>
+                                    <property name="name">message_key</property>
+                                    <text-property name="displayName">message_key</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["message_key"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">translation</property>
+                                    <text-property name="displayName">translation</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["translation"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                            </list-property>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["translation"]</VALUE-OF>]]></text-property>
                         </text>
                     </cell>
                     <cell id="208">
@@ -2572,11 +2663,35 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <label id="232">
+                        <text id="300">
                             <property name="fontWeight">bold</property>
                             <property name="textAlign">left</property>
-                            <text-property name="text">Discount Amount (Rs.)</text-property>
-                        </label>
+                            <property name="dataSet">TranslateDS</property>
+                            <list-property name="paramBindings">
+                                <structure>
+                                    <property name="paramName">param_1</property>
+                                    <simple-property-list name="expression">
+                                        <value type="javascript">'Discount amount'</value>
+                                    </simple-property-list>
+                                </structure>
+                            </list-property>
+                            <list-property name="boundDataColumns">
+                                <structure>
+                                    <property name="name">message_key</property>
+                                    <text-property name="displayName">message_key</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["message_key"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">translation</property>
+                                    <text-property name="displayName">translation</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["translation"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                            </list-property>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["translation"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                 </row>
             </header>
@@ -2591,10 +2706,11 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <data id="234">
+                        <text id="295">
                             <property name="textAlign">right</property>
-                            <property name="resultSetColumn">before_days</property>
-                        </data>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["before_days"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                     <cell id="211">
                         <property name="borderBottomStyle">solid</property>
@@ -2605,10 +2721,11 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <data id="236">
+                        <text id="296">
                             <property name="textAlign">right</property>
-                            <property name="resultSetColumn">discount_percent</property>
-                        </data>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["discount_percent"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                     <cell id="212">
                         <property name="borderBottomStyle">solid</property>
@@ -2619,10 +2736,11 @@ where LangTranslate.message_key = ? and LangTranslate.language = ?]]></xml-prope
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <data id="235">
+                        <text id="297">
                             <property name="textAlign">right</property>
-                            <property name="resultSetColumn">discount_amount</property>
-                        </data>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["discount_amount"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                 </row>
             </detail>
@@ -2762,11 +2880,35 @@ else {
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <label id="197">
+                        <text id="309">
                             <property name="fontWeight">bold</property>
                             <property name="textAlign">left</property>
-                            <text-property name="text">Name</text-property>
-                        </label>
+                            <property name="dataSet">TranslateDS</property>
+                            <list-property name="paramBindings">
+                                <structure>
+                                    <property name="paramName">param_1</property>
+                                    <simple-property-list name="expression">
+                                        <value type="javascript">'name'</value>
+                                    </simple-property-list>
+                                </structure>
+                            </list-property>
+                            <list-property name="boundDataColumns">
+                                <structure>
+                                    <property name="name">message_key</property>
+                                    <text-property name="displayName">message_key</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["message_key"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">translation</property>
+                                    <text-property name="displayName">translation</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["translation"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                            </list-property>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["translation"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                     <cell id="123">
                         <property name="borderBottomStyle">solid</property>
@@ -2777,11 +2919,35 @@ else {
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <label id="198">
+                        <text id="308">
                             <property name="fontWeight">bold</property>
                             <property name="textAlign">left</property>
-                            <text-property name="text">Email</text-property>
-                        </label>
+                            <property name="dataSet">TranslateDS</property>
+                            <list-property name="paramBindings">
+                                <structure>
+                                    <property name="paramName">param_1</property>
+                                    <simple-property-list name="expression">
+                                        <value type="javascript">'Email'</value>
+                                    </simple-property-list>
+                                </structure>
+                            </list-property>
+                            <list-property name="boundDataColumns">
+                                <structure>
+                                    <property name="name">message_key</property>
+                                    <text-property name="displayName">message_key</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["message_key"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">translation</property>
+                                    <text-property name="displayName">translation</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["translation"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                            </list-property>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["translation"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                     <cell id="253">
                         <property name="borderBottomStyle">solid</property>
@@ -2792,11 +2958,35 @@ else {
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <label id="256">
+                        <text id="307">
                             <property name="fontWeight">bold</property>
                             <property name="textAlign">left</property>
-                            <text-property name="text">Email Sent</text-property>
-                        </label>
+                            <property name="dataSet">TranslateDS</property>
+                            <list-property name="paramBindings">
+                                <structure>
+                                    <property name="paramName">param_1</property>
+                                    <simple-property-list name="expression">
+                                        <value type="javascript">'Email sent'</value>
+                                    </simple-property-list>
+                                </structure>
+                            </list-property>
+                            <list-property name="boundDataColumns">
+                                <structure>
+                                    <property name="name">message_key</property>
+                                    <text-property name="displayName">message_key</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["message_key"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">translation</property>
+                                    <text-property name="displayName">translation</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["translation"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                            </list-property>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["translation"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                     <cell id="124">
                         <property name="borderBottomStyle">solid</property>
@@ -2807,11 +2997,35 @@ else {
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <label id="199">
+                        <text id="305">
                             <property name="fontWeight">bold</property>
                             <property name="textAlign">left</property>
-                            <text-property name="text">Amount (Rs.)</text-property>
-                        </label>
+                            <property name="dataSet">TranslateDS</property>
+                            <list-property name="paramBindings">
+                                <structure>
+                                    <property name="paramName">param_1</property>
+                                    <simple-property-list name="expression">
+                                        <value type="javascript">'Amount'</value>
+                                    </simple-property-list>
+                                </structure>
+                            </list-property>
+                            <list-property name="boundDataColumns">
+                                <structure>
+                                    <property name="name">message_key</property>
+                                    <text-property name="displayName">message_key</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["message_key"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                                <structure>
+                                    <property name="name">translation</property>
+                                    <text-property name="displayName">translation</text-property>
+                                    <expression name="expression" type="javascript">dataSetRow["translation"]</expression>
+                                    <property name="dataType">string</property>
+                                </structure>
+                            </list-property>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["translation"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                 </row>
             </header>
@@ -2826,9 +3040,11 @@ else {
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <data id="202">
-                            <property name="resultSetColumn">name</property>
-                        </data>
+                        <text id="301">
+                            <property name="textAlign">left</property>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["name"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                     <cell id="127">
                         <property name="borderBottomStyle">solid</property>
@@ -2839,9 +3055,10 @@ else {
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <data id="201">
-                            <property name="resultSetColumn">email</property>
-                        </data>
+                        <text id="302">
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["email"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                     <cell id="254">
                         <property name="borderBottomStyle">solid</property>
@@ -2852,9 +3069,11 @@ else {
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <data id="257">
-                            <property name="resultSetColumn">email_sent</property>
-                        </data>
+                        <text id="303">
+                            <property name="textAlign">left</property>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["email_sent"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                     <cell id="128">
                         <property name="borderBottomStyle">solid</property>
@@ -2865,10 +3084,11 @@ else {
                         <property name="borderRightWidth">thin</property>
                         <property name="borderTopStyle">solid</property>
                         <property name="borderTopWidth">thin</property>
-                        <data id="200">
+                        <text id="304">
                             <property name="textAlign">right</property>
-                            <property name="resultSetColumn">amount</property>
-                        </data>
+                            <property name="contentType">html</property>
+                            <text-property name="content"><![CDATA[<VALUE-OF>row["amount"]</VALUE-OF>]]></text-property>
+                        </text>
                     </cell>
                 </row>
             </detail>

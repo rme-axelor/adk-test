@@ -6,6 +6,8 @@ import java.util.Collections;
 
 import com.axelor.eventregistration.db.Event;
 import com.axelor.eventregistration.service.EventService;
+import com.axelor.eventregistration.translation.ITranslation;
+import com.axelor.i18n.I18n;
 import com.axelor.rpc.ActionRequest;
 import com.axelor.rpc.ActionResponse;
 import com.google.inject.Inject;
@@ -19,9 +21,20 @@ public class EventController {
     Event event = request.getContext().asType(Event.class);
 
     response.setValues(eventService.compute(event));
+
+    if (event.getRegistrationClose().isBefore(LocalDate.now())
+        || event.getRegistrationOpen().isAfter(LocalDate.now())) {
+      response.setFlash(I18n.get(ITranslation.REGISTRATIONS_NOT_ALLOWED));
+      response.setReadonly("importRegistration", true);
+      response.setReadonly("discount", true);
+      response.setReadonly("eventRegistration", true);
+      return;
+    }
+
     if (!(event.getEventRegistration().isEmpty())) {
       response.setReadonly("discount", true);
     }
+
     if (event.getCapacity() - event.getTotalEntry() <= 0) {
       response.setReadonly("eventRegistration", true);
     }
@@ -43,7 +56,7 @@ public class EventController {
     LocalDateTime endDate = event.getEndDate();
 
     if (startDate.isAfter(endDate)) {
-      response.addError("endDate", "End date should be higher than or equal to Start Date");
+      response.addError("endDate", "End.Date");
       return;
     }
 

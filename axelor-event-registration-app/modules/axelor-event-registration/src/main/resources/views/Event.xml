@@ -31,7 +31,7 @@
 			<button name="importRegistration" title="Import Registration"
 				readonlyIf="!id" css="blue"
 				onClick="save,action-event-view-import-event-registration-popup,save" />
-			<button name="sendEmail" title="sendEmail" icon="fa-envelope"
+			<button name="sendEmail" title="Send Email" icon="fa-envelope"
 				onClick="save,com.axelor.eventregistration.web.EventController:sendEmails"
 				readonlyIf="!id" />
 			<button name="printReport" title="Print Report" onClick="action-print-report"

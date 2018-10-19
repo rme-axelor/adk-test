@@ -45,7 +45,7 @@ public class EventRegistrationController {
 
     if ((event.getCapacity() - event.getTotalEntry()) <= 0) {
       response.addError("event", I18n.get(ITranslation.REGISTRATIONS_FULL));
-      throw new ValidationException("Capacity full for this event.... Try again later...");
+      throw new ValidationException(I18n.get(ITranslation.REGISTRATIONS_FULL));
     }
 
     if (eventRegistration.getRegistrationDate().toLocalDate().isAfter(event.getRegistrationClose())
@@ -93,6 +93,10 @@ public class EventRegistrationController {
   public void importRegistrations(ActionRequest request, ActionResponse response)
       throws IOException {
 
+    Long id = Long.valueOf(request.getContext().get("_id").toString());
+
+    Event event = eventRepo.find(id);
+
     @SuppressWarnings("unchecked")
     LinkedHashMap<String, Object> map =
         (LinkedHashMap<String, Object>) request.getContext().get("metaFile");
@@ -104,11 +108,7 @@ public class EventRegistrationController {
       return;
     }
 
-    Long id = Long.valueOf(request.getContext().get("_id").toString());
-
-    Event event = eventRepo.find(id);
     response.setAlert("Total Imports Can be: " + (event.getCapacity() - event.getTotalEntry()));
-
     eventRegistrationService.importEventRegistrationData(dataFile, event);
     response.setFlash("Data Imported!!!");
     response.setReload(true);

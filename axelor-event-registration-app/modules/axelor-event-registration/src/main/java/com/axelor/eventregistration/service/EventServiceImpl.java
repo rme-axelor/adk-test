@@ -19,7 +19,9 @@ import com.axelor.eventregistration.db.Event;
 import com.axelor.eventregistration.db.EventRegistration;
 import com.axelor.eventregistration.db.repo.EventRegistrationRepository;
 import com.axelor.eventregistration.db.repo.EventRepository;
+import com.axelor.eventregistration.translation.ITranslation;
 import com.axelor.exception.AxelorException;
+import com.axelor.i18n.I18n;
 import com.axelor.meta.MetaFiles;
 import com.axelor.meta.db.MetaModel;
 import com.axelor.meta.db.repo.MetaModelRepository;
@@ -72,12 +74,11 @@ public class EventServiceImpl implements EventService {
   public void sendEmails(Event event, String model) {
 
     if (event.getEndDate().isBefore(LocalDateTime.now())) {
-      throw new ValidationException(
-          "Event is completed so... Emails are of no use now...!<br> Thankyou.");
+      throw new ValidationException(I18n.get(ITranslation.EMAILS_NOT_NEED));
     }
 
     if (event.getDescription() == null) {
-      throw new ValidationException("Add Event Description to Send Emails...!!!");
+      throw new ValidationException(ITranslation.ADD_DESCRIPTION);
     }
 
     MetaModel metaModel = metaModelRepo.all().filter("self.fullName = ?", model).fetchOne();
@@ -85,7 +86,7 @@ public class EventServiceImpl implements EventService {
     Template template =
         templateRepo.all().filter("self.metaModel = ?", metaModel.getId()).fetchOne();
     if (template == null) {
-      throw new ValidationException("Template Missing... Please Create template First");
+      throw new ValidationException(I18n.get(ITranslation.TEMPLATE_MISSING));
     }
 
     List<EventRegistration> eventRegistrationList = event.getEventRegistration();
