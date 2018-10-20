@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,8 +43,8 @@ public class EventRegistrationServiceImpl implements EventRegistrationService {
     File tmpDir = null;
     File configXML = null;
     File csvFile = null;
-    try {
 
+    try {
       tmpDir = Files.createTempDir();
       configXML = new File(tmpDir, "input-config.xml");
       InputStream bindInputStream =
@@ -95,35 +96,21 @@ public class EventRegistrationServiceImpl implements EventRegistrationService {
 
     Event event = eventRepo.find(eventRegistration.getEvent().getId());
 
-    LocalDate registrationOpen = event.getRegistrationOpen();
     LocalDate registrationClose = event.getRegistrationClose();
     LocalDateTime registrationDate = eventRegistration.getRegistrationDate();
 
-    if (!(registrationDate.toLocalDate().isBefore(registrationOpen))
-        && !(registrationDate.toLocalDate().isAfter(registrationClose))) {
+    Long days = ChronoUnit.DAYS.between(registrationDate.toLocalDate(), registrationClose);
 
-      BigDecimal discountamount = BigDecimal.ZERO;
+    BigDecimal discountamount = BigDecimal.ZERO;
 
+    if (days >= 0) {
       List<Discount> discountlist = event.getDiscount();
       for (Discount discount : discountlist) {
-        Integer beforeDays = discount.getBeforeDays();
-
-        BigDecimal tempDiscount = BigDecimal.ZERO;
-
-        if (!registrationClose.minusDays(beforeDays).isBefore(registrationDate.toLocalDate())) {
-          tempDiscount = discountamount;
-          discountamount = BigDecimal.ZERO;
-          discountamount = discountamount.add(discount.getDiscountAmount());
-          if ((registrationClose.minusDays(beforeDays).isEqual(registrationDate.toLocalDate()))) {
-            break;
-          }
-          if (tempDiscount.compareTo(discountamount) == 1) {
-            discountamount = tempDiscount;
-          }
+        if (days >= discount.getBeforeDays()) {
+          discountamount = discount.getDiscountAmount();
         }
       }
-
-      eventRegistration.setAmount(event.getEventFees().subtract(discountamount));
+      eventRegistration.setAmount(discountamount);
       return eventRegistration;
     }
     eventRegistration.setAmount(event.getEventFees());

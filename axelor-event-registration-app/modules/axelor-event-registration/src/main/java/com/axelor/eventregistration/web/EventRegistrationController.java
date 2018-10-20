@@ -40,6 +40,7 @@ public class EventRegistrationController {
 
   public void validateEvent(ActionRequest request, ActionResponse response)
       throws ValidationException {
+
     EventRegistration eventRegistration = request.getContext().asType(EventRegistration.class);
     Event event = eventRepo.find(eventRegistration.getEvent().getId());
 
@@ -78,14 +79,14 @@ public class EventRegistrationController {
       return;
     }
 
-    Event event1 = request.getContext().getParent().asType(Event.class);
+    Long id = request.getContext().getParent().asType(Event.class).getId();
 
-    if (event1.getId() == null) {
+    if (id == null) {
       response.setError("Please save event First!!!");
       return;
     }
 
-    Event event = eventRepo.find(event1.getId());
+    Event event = eventRepo.find(id);
     response.setValue("event", event);
     response.setHidden("event", true);
   }

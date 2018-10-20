@@ -76,7 +76,7 @@ public class EventController {
       return;
     }
 
-    if (event.getEventRegistration().isEmpty()) {
+    if (event.getEventRegistration() == null || event.getEventRegistration().isEmpty()) {
       response.setAlert(
           "If you want to Add Discount List add it now... Once event registrations will get added.. Discount List will not get change...!");
       return;

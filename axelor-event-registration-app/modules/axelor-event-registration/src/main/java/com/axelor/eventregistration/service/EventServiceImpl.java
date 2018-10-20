@@ -81,6 +81,8 @@ public class EventServiceImpl implements EventService {
       throw new ValidationException(ITranslation.ADD_DESCRIPTION);
     }
 
+    System.out.println(event.getEventRegistration().getClass().getName());
+
     MetaModel metaModel = metaModelRepo.all().filter("self.fullName = ?", model).fetchOne();
 
     Template template =
@@ -93,27 +95,9 @@ public class EventServiceImpl implements EventService {
     for (EventRegistration eventRegistration : eventRegistrationList) {
       if (eventRegistration.getEmail() != null && (!eventRegistration.getEmailSent())) {
 
-        String content =
-            "<b>Event Reference: </b>"
-                + event.getReference()
-                + "<br><b>Event Descriprtion: </b>"
-                + event.getDescription()
-                + "<br><br><b>Participant Name: </b>"
-                + eventRegistration.getName()
-                + "<br><b>Registration Date: </b>"
-                + eventRegistration.getRegistrationDate()
-                + "<br><br><b>Event Venue: </b>"
-                + event.getVenu().getFullname()
-                + "<br><b>Amount to Pay: </b>"
-                + eventRegistration.getAmount();
-
-        template.setName(event.getDescription());
-        template.setToRecipients(eventRegistration.getEmail());
-        template.setSubject(event.getDescription());
-        template.setContent(content);
-
         try {
-          Message message = templateMessageService.generateMessage(event, template);
+
+          Message message = templateMessageService.generateMessage(event., template);
           messageService.sendByEmail(message);
           eventRegistration.setEmailSent(true);
           eventRegistrationRepo.save(eventRegistration);
@@ -130,6 +114,43 @@ public class EventServiceImpl implements EventService {
         } catch (MessagingException e) {
           e.printStackTrace();
         }
+        //        String content =
+        //            "<b>Event Reference: </b>"
+        //                + event.getReference()
+        //                + "<br><b>Event Descriprtion: </b>"
+        //                + event.getDescription()
+        //                + "<br><br><b>Participant Name: </b>"
+        //                + eventRegistration.getName()
+        //                + "<br><b>Registration Date: </b>"
+        //                + eventRegistration.getRegistrationDate()
+        //                + "<br><br><b>Event Venue: </b>"
+        //                + event.getVenu().getFullname()
+        //                + "<br><b>Amount to Pay: </b>"
+        //                + eventRegistration.getAmount();
+        //
+        //        template.setName(event.getDescription());
+        //        template.setToRecipients(eventRegistration.getEmail());
+        //        template.setSubject(event.getDescription());
+        //        template.setContent(content);
+        //
+        //        try {
+        //          Message message = templateMessageService.generateMessage(event, template);
+        //          messageService.sendByEmail(message);
+        //          eventRegistration.setEmailSent(true);
+        //          eventRegistrationRepo.save(eventRegistration);
+        //        } catch (ClassNotFoundException e) {
+        //          e.printStackTrace();
+        //        } catch (InstantiationException e) {
+        //          e.printStackTrace();
+        //        } catch (IllegalAccessException e) {
+        //          e.printStackTrace();
+        //        } catch (AxelorException e) {
+        //          e.printStackTrace();
+        //        } catch (IOException e) {
+        //          e.printStackTrace();
+        //        } catch (MessagingException e) {
+        //          e.printStackTrace();
+        //        }
       }
     }
   }

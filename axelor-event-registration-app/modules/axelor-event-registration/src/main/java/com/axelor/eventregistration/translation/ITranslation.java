@@ -9,6 +9,7 @@ public interface ITranslation {
   /*Used in Event Controller*/
   public static final String REGISTRATIONS_NOT_ALLOWED = /*$$(*/ "Registration.notAllowed"; /*)*/;
   public static final String END_DATE = /*$$(*/ "End.Date"; /*)*/;
+  public static final String ALL_DATE = /*$$(*/ "Enter.All.Dates" /*)*/;
 
   /*This are used mostly in Event Service Implementation*/
   public static final String EMAILS_NOT_NEED = /*$$(*/ "Emails.noNeed"; /*)*/;

@@ -2,6 +2,7 @@ package com.axelor.eventregistration.web;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 import com.axelor.eventregistration.db.Discount;
 import com.axelor.eventregistration.db.Event;
@@ -29,7 +30,7 @@ public class DiscountController {
     Discount discount = request.getContext().asType(Discount.class);
     Event event = request.getContext().getParent().asType(Event.class);
 
-    Integer beforeDays = discount.getBeforeDays();
+    int beforeDays = discount.getBeforeDays();
 
     LocalDate registrationOpen = event.getRegistrationOpen();
     LocalDate registrationClose = event.getRegistrationClose();
@@ -38,8 +39,10 @@ public class DiscountController {
       response.addError("beforeDays", "Please Enter Registration dates of Event!!!");
       return;
     }
-    LocalDate newDate = registrationClose.minusDays(beforeDays);
-    if (newDate.isBefore(registrationOpen)) {
+
+    int betweenDays = (int) ChronoUnit.DAYS.between(registrationOpen, registrationClose);
+
+    if (beforeDays > betweenDays) {
       response.addError("beforeDays", "Before Days Exceeds gap of Registrations Dates!!!");
     }
   }
